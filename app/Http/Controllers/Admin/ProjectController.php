@@ -42,15 +42,17 @@ class ProjectController extends Controller
         $newProject = new Project();
         $data['slug'] = Str::slug($request->title,'-');
 
-        $newProject->fill($data);
-
-        $newProject->save();
-
-
         if($request->hasFile('preview_image')){
             $path = Storage::put('preview-image-cover',$request->preview_image);
             $data['preview_image'] = $path;
         }
+
+
+        $newProject->fill($data);
+
+
+        $newProject->save();
+
 
         if($request->has('technologies')){
             $newProject->technologies()->attach($request->technologies);
